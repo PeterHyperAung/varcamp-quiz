@@ -1,0 +1,289 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens sampled directly from `theme.png`.
+ *
+ * The reference is a deep navy-to-purple field with saturated crimson, sun
+ * yellow, electric blue and magenta accents, pale lavender supporting text and
+ * thin "circuit" line work with square nodes. Every screen — public timetable,
+ * quiz, results, certificate and admin — uses these same tokens.
+ */
+@theme {
+  /* Backdrop: near-black navy through indigo into plum. */
+  --color-navy-950: #000137;
+  --color-navy-900: #05023a;
+  --color-navy-800: #090a4b;
+  --color-navy-700: #131453;
+  --color-navy-600: #191b62;
+  --color-plum-900: #200762;
+  --color-plum-800: #2b0a7a;
+
+  /* Accents. */
+  --color-crimson-600: #c4123c;
+  --color-crimson-500: #e21a4a;
+  --color-sun-500: #ffc940;
+  --color-sun-600: #e0a800;
+  --color-electric-500: #2d81ff;
+  --color-electric-400: #3887ff;
+  --color-magenta-500: #e33e99;
+  --color-magenta-400: #ef5cb0;
+
+  /* Supporting tones. */
+  --color-lavender-100: #e6e8fb;
+  --color-lavender-300: #b9bde8;
+  --color-lavender-500: #7073a2;
+  --color-outline-500: #4a4ea8;
+
+  --font-display: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-myanmar: var(--font-noto-myanmar), var(--font-inter), ui-sans-serif, sans-serif;
+
+  --radius-pill: 9999px;
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-navy-950);
+    color: var(--color-white);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :where(input, select, textarea, button) {
+    font: inherit;
+  }
+
+  :where(input, select, textarea) {
+    max-width: 100%;
+  }
+
+  :where(img, svg, video, canvas) {
+    max-width: 100%;
+  }
+
+  fieldset {
+    min-inline-size: 0;
+  }
+
+  /* Visible focus on every interactive element, never removed. */
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 2px solid var(--color-sun-500);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background-color: var(--color-crimson-500);
+    color: var(--color-white);
+  }
+}
+
+@layer components {
+  /* The reference's translucent raised panels, outlined in indigo. */
+  .vc-surface {
+    background-color: color-mix(in oklab, var(--color-navy-800) 82%, transparent);
+    border: 1px solid color-mix(in oklab, var(--color-outline-500) 70%, transparent);
+    border-radius: 1rem;
+    backdrop-filter: blur(6px);
+  }
+
+  .vc-surface-raised {
+    background-color: color-mix(in oklab, var(--color-navy-700) 90%, transparent);
+    border: 1px solid color-mix(in oklab, var(--color-outline-500) 90%, transparent);
+    border-radius: 1rem;
+  }
+
+  /* Outlined pill used for tracks and filters in the reference. */
+  .vc-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    max-width: 100%;
+    border: 1px solid color-mix(in oklab, var(--color-outline-500) 85%, transparent);
+    border-radius: var(--radius-pill);
+    background-color: color-mix(in oklab, var(--color-navy-800) 70%, transparent);
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    color: var(--color-white);
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  /* The reference's signature sun-yellow call-to-action pill. */
+  .vc-pill-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    max-width: 100%;
+    border-radius: var(--radius-pill);
+    background-color: var(--color-sun-500);
+    color: var(--color-navy-950);
+    font-weight: 700;
+    padding: 0.75rem 1.75rem;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    transition:
+      background-color 150ms ease,
+      transform 150ms ease;
+  }
+
+  .vc-pill-cta:hover:not(:disabled) {
+    background-color: var(--color-sun-600);
+  }
+
+  .vc-pill-cta:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+
+  .vc-pill-cta:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  .vc-pill-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    max-width: 100%;
+    border-radius: var(--radius-pill);
+    border: 1px solid color-mix(in oklab, var(--color-outline-500) 90%, transparent);
+    background-color: transparent;
+    color: var(--color-white);
+    font-weight: 600;
+    padding: 0.7rem 1.5rem;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    transition: border-color 150ms ease, background-color 150ms ease;
+  }
+
+  .vc-pill-secondary:hover:not(:disabled) {
+    border-color: var(--color-electric-500);
+    background-color: color-mix(in oklab, var(--color-electric-500) 12%, transparent);
+  }
+
+  .vc-pill-secondary:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  .vc-eyebrow {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    color: var(--color-lavender-300);
+  }
+
+  .vc-heading {
+    font-family: var(--font-display);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    overflow-wrap: anywhere;
+  }
+
+  .vc-body-copy {
+    color: var(--color-lavender-300);
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+  }
+
+  .vc-field-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 0.375rem;
+  }
+
+  .vc-field {
+    width: 100%;
+    min-width: 0;
+    border-radius: 0.625rem;
+    border: 1px solid color-mix(in oklab, var(--color-outline-500) 85%, transparent);
+    background-color: color-mix(in oklab, var(--color-navy-950) 60%, transparent);
+    padding: 0.625rem 0.875rem;
+    color: var(--color-white);
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .vc-field::placeholder {
+    color: var(--color-lavender-500);
+  }
+
+  .vc-field:focus {
+    border-color: var(--color-electric-500);
+  }
+
+  .vc-field-error {
+    border-color: var(--color-crimson-500);
+  }
+
+  .vc-error-text {
+    color: var(--color-magenta-400);
+    font-size: 0.8125rem;
+    margin-top: 0.25rem;
+    overflow-wrap: anywhere;
+  }
+
+  .vc-field-hint {
+    color: var(--color-lavender-500);
+    font-size: 0.8125rem;
+    margin-top: 0.25rem;
+    overflow-wrap: anywhere;
+  }
+}
+
+@layer utilities {
+  /* Thin gradient hairline echoing the reference's circuit traces. */
+  .vc-rule {
+    height: 1px;
+    border: 0;
+    background: linear-gradient(
+      to right,
+      transparent,
+      color-mix(in oklab, var(--color-outline-500) 80%, transparent),
+      transparent
+    );
+  }
+
+  .vc-text-gradient {
+    background: linear-gradient(
+      100deg,
+      var(--color-white) 30%,
+      var(--color-lavender-100) 70%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+/* Honour the operating-system reduced-motion preference. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
